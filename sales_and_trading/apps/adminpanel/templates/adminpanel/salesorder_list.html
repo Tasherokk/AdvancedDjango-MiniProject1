@@ -1,0 +1,31 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<h2>SalesOrders</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Customer</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.customer.username }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+      <td>{{ order.total }}</td>
+      <td>
+        <a class="btn btn-sm btn-success" href="{% url 'adminpanel:salesorder_update' order.id %}">Edit</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

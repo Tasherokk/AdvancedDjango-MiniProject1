@@ -1,0 +1,29 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>{% if user.role in "trader admin" %}All{% else %}My{% endif %} Transactions</h2>
+<div class="mb-3">
+  <a href="{% url 'frontend:create_transaction' %}" class="btn btn-success">Create Transaction</a>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Transaction ID</th>
+      <th>Order ID</th>
+      <th>Executed At</th>
+      <th>Executed Price</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for tx in transactions %}
+    <tr>
+      <td>{{ tx.id }}</td>
+      <td>{{ tx.order.id }}</td>
+      <td>{{ tx.executed_at|date:"Y-m-d H:i" }}</td>
+      <td>{{ tx.executed_price }}</td>
+      <td>{{ tx.quantity }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

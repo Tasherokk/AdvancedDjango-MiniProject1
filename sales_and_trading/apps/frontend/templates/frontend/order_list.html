@@ -1,0 +1,29 @@
+<!-- apps/frontend/templates/frontend/order_list.html -->
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>My Orders</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+      <td>{{ order.total }}</td>
+      <td>
+        <a href="{% url 'frontend:order_detail' order.id %}">View</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

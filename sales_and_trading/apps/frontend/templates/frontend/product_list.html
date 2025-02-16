@@ -1,0 +1,48 @@
+<!-- apps/frontend/templates/frontend/product_list.html -->
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>Available Products</h2>
+
+{% if user.role == 'admin' or user.role == 'trader' or user.is_staff %}
+  <div class="mb-2">
+    <a href="{% url 'frontend:create_product' %}" class="btn btn-success">Create New Product</a>
+  </div>
+{% endif %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Product Image</th>
+      <th>Product</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Description</th>
+      {% if user.role == 'admin' or user.role == 'trader' or user.is_staff %}
+      <th>Actions</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for product in products %}
+    <tr>
+      <td>
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="Product" height="50"/>
+        {% else %}
+          No Image
+        {% endif %}
+      </td>
+      <td>{{ product.name }}</td>
+      <td>{% if product.category %}{{ product.category.name }}{% endif %}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.description|truncatewords:15 }}</td>
+      {% if user.role == 'admin' or user.role == 'trader' or user.is_staff %}
+      <td>
+        <a class="btn btn-sm btn-info" href="{% url 'frontend:update_product' product.id %}">Edit</a>
+      </td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

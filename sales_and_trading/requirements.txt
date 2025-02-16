@@ -1,0 +1,15 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+drf-yasg
+psycopg2-binary
+Pillow                # For image handling
+celery
+redis
+weasyprint              # For PDF generation
+PyPDF2                # (Optional for PDF manipulations, e.g. reading)
+gunicorn
+whitenoise
+django-crispy-forms
+crispy-bootstrap4
+django-redis

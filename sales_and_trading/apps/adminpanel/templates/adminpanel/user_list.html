@@ -1,0 +1,41 @@
+<!-- apps/adminpanel/templates/adminpanel/user_list.html -->
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Users</h2>
+  <a class="btn btn-primary" href="{% url 'adminpanel:user_create' %}">Create User</a>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Profile Image</th>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr>
+      <td>
+        {% if user.profile_image %}
+          <img src="{{ user.profile_image.url }}" alt="Profile" height="50"/>
+        {% else %}
+          No Image
+        {% endif %}
+      </td>
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <a class="btn btn-sm btn-success" href="{% url 'adminpanel:user_update' user.id %}">Edit</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

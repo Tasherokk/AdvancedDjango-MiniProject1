@@ -1,0 +1,14 @@
+<!-- apps/frontend/templates/frontend/index.html -->
+{% extends "frontend/base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">Welcome to Sales & Trading App!</h1>
+  <p class="lead">This is a simple frontend demonstration using Django templates.</p>
+  <hr class="my-4">
+  {% if not user.is_authenticated %}
+    <p>Please <a href="{% url 'frontend:login' %}">login</a> or <a href="{% url 'frontend:register' %}">register</a>.</p>
+  {% else %}
+    <p><a href="{% url 'frontend:product_list' %}">View Products</a> or <a href="{% url 'frontend:create_order' %}">Create an Order</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

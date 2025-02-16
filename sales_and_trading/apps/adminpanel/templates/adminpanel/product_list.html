@@ -1,0 +1,40 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Products</h2>
+  <a class="btn btn-primary" href="{% url 'adminpanel:product_create' %}">Create Product</a>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Product Image</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="Product" height="50"/>
+        {% else %}
+          No Image
+        {% endif %}
+      </td>
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{% if product.category %}{{ product.category.name }}{% endif %}</td>
+      <td>{{ product.price }}</td>
+      <td>
+        <a class="btn btn-sm btn-success" href="{% url 'adminpanel:product_update' product.id %}">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

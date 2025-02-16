@@ -1,0 +1,10 @@
+<!-- apps/frontend/templates/frontend/create_order.html -->
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>Create Order</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+{% endblock %}

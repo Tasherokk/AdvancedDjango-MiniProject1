@@ -1,0 +1,10 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>Create Transaction</h2>
+<p><em>In a real trading system, transactions are auto-generated. This is a manual fallback.</em></p>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Create Transaction</button>
+</form>
+{% endblock %}

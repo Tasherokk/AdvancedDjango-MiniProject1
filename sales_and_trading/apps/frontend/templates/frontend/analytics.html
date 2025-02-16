@@ -1,0 +1,9 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>Analytics</h2>
+<p>Click the button to generate and download a CSV report of orders and sales orders.</p>
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Generate Report</button>
+</form>
+{% endblock %}

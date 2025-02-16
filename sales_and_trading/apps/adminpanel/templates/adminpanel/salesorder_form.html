@@ -1,0 +1,11 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<h2>{{ title }}</h2>
+<p>Order ID: {{ order.id }}</p>
+<p>Customer: {{ order.customer.username }}</p>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

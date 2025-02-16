@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Invoice #{{ invoice.id }}</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+  </style>
+</head>
+<body>
+  <h2>Invoice #{{ invoice.id }}</h2>
+  <p><strong>Date:</strong> {{ invoice.invoice_date|date:"Y-m-d H:i" }}</p>
+  <p><strong>Customer:</strong> {{ invoice.sales_order.customer.username }}</p>
+
+  <h3>Order Items</h3>
+  <table>
+    <tr><th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr>
+    {% for item in invoice.sales_order.items.all %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.subtotal }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <p><strong>Total:</strong> {{ invoice.sales_order.total }}</p>
+</body>
+</html>

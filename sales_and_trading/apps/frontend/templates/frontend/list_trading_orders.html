@@ -1,0 +1,37 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>{% if user.role in "trader admin" %}All{% else %}My{% endif %} Trading Orders</h2>
+<div class="mb-3">
+  <a href="{% url 'frontend:create_trading_order' %}" class="btn btn-success">Create New Order</a>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Product</th>
+      <th>Type</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.product.name }}</td>
+      <td>{{ order.order_type }}</td>
+      <td>{{ order.quantity }}</td>
+      <td>{{ order.price }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+      <td>
+        <a href="{% url 'frontend:trading_order_detail' order.id %}" class="btn btn-sm btn-primary">View</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,12 @@
+<!-- apps/adminpanel/templates/adminpanel/user_form.html -->
+{% extends "adminpanel/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>{{ title }}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

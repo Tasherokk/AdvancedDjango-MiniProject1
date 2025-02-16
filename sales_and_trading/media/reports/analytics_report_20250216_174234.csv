@@ -1,0 +1,3 @@
+OrderID,User,Product,OrderType,Quantity,Price,CreatedAt
+
+SalesOrderID,Customer,Status,CreatedAt,Total

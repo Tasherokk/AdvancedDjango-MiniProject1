@@ -1,0 +1,35 @@
+<!-- apps/frontend/templates/frontend/order_detail.html -->
+{% extends "frontend/base.html" %}
+{% block content %}
+<h2>Sales Order #{{ order.id }}</h2>
+<p>Status: {{ order.status }}</p>
+<p>Created: {{ order.created_at|date:"Y-m-d H:i" }}</p>
+<p>Total: {{ order.total }}</p>
+
+<h3>Items</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in order.items.all %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.subtotal }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<form method="GET" action="{% url 'frontend:generate_invoice_frontend' order.id %}">
+  <button type="submit" class="btn btn-info">Generate PDF Invoice</button>
+</form>
+
+{% endblock %}
