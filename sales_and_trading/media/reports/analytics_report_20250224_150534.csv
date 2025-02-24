@@ -1,0 +1,8 @@
+OrderID,User,Product,OrderType,Quantity,Price,CreatedAt
+2,trader,Xiaomi Redmi 12,buy,10,10.00,2025-02-16 18:12:37
+1,trader,Xiaomi Redmi 12,sell,10,10.00,2025-02-16 18:12:07
+
+SalesOrderID,Customer,Status,CreatedAt,Total
+3,trader,pending,2025-02-16 17:55:25,100.00
+1,olzhas,pending,2025-02-16 17:54:14,90000.0000
+2,sales,completed,2025-02-16 17:55:01,900.0000

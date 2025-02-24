@@ -1,0 +1,12 @@
+OrderID;User;Product;OrderType;Quantity;Price;CreatedAt
+
+SalesOrderID;Customer;Status;CreatedAt;Total
+1;olzhas;approved;2025-02-24 15:13:05;18000000.0000
+
+=== ANALYTICS ===
+Total Orders;0
+Total Quantity (all Orders);0
+Total Amount (all Orders);0.00
+
+Total Sales Orders;1
+Total Sales Sum;18000000.00

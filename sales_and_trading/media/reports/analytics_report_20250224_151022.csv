@@ -1,0 +1,11 @@
+OrderID;User;Product;OrderType;Quantity;Price;CreatedAt
+
+SalesOrderID;Customer;Status;CreatedAt;Total
+
+=== ANALYTICS ===
+Total Orders;0
+Total Quantity (all Orders);0
+Total Amount (all Orders);0.00
+
+Total Sales Orders;0
+Total Sales Sum;0.00
