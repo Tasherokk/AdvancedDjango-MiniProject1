@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c54b1fa8-b9ed-45d3-b06a-76586a2a3588" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/.env" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/apps/frontend/templates/frontend/order_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/apps/frontend/templates/frontend/order_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/apps/frontend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/apps/frontend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/apps/frontend/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/apps/frontend/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/apps/sales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/apps/sales/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/sales_and_trading/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/sales_and_trading/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales_and_trading/templates/invoice_template.html" beforeDir="false" afterPath="$PROJECT_DIR$/sales_and_trading/templates/invoice_template.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

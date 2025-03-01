@@ -14,9 +14,21 @@
   <p><strong>Date:</strong> {{ invoice.invoice_date|date:"Y-m-d H:i" }}</p>
   <p><strong>Customer:</strong> {{ invoice.sales_order.customer.username }}</p>
 
+  <!-- Display discount if > 0 -->
+  {% if discount_percentage > 0 %}
+    <p><strong>Discount Applied:</strong> {{ discount_percentage }}%</p>
+  {% else %}
+    <p><strong>No Discount</strong></p>
+  {% endif %}
+
   <h3>Order Items</h3>
   <table>
-    <tr><th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Subtotal</th>
+    </tr>
     {% for item in invoice.sales_order.items.all %}
       <tr>
         <td>{{ item.product.name }}</td>
@@ -27,6 +39,6 @@
     {% endfor %}
   </table>
 
-  <p><strong>Total:</strong> {{ invoice.sales_order.total }}</p>
+  <p><strong>Total (After Discount):</strong> {{ invoice.sales_order.total }}</p>
 </body>
 </html>

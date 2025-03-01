@@ -1,0 +1,15 @@
+OrderID;User;Product;OrderType;Quantity;Price;CreatedAt
+2;trader;Nitro5;sell;1;300000.00;2025-02-25 13:16:55
+1;olzhas;Nitro5;buy;1;350000.00;2025-02-25 13:15:41
+
+SalesOrderID;Customer;Status;CreatedAt;Total
+1;olzhas;approved;2025-02-24 15:13:05;18000000.0000
+2;tasherok;completed;2025-02-25 13:09:57;5000000.0000
+
+=== ANALYTICS ===
+Total Orders;2
+Total Quantity (all Orders);2
+Total Amount (all Orders);650000.00
+
+Total Sales Orders;2
+Total Sales Sum;23000000.00

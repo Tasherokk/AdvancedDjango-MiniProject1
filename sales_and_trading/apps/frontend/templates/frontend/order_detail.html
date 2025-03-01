@@ -1,10 +1,20 @@
-<!-- apps/frontend/templates/frontend/order_detail.html -->
 {% extends "frontend/base.html" %}
 {% block content %}
 <h2>Sales Order #{{ order.id }}</h2>
 <p>Status: {{ order.status }}</p>
 <p>Created: {{ order.created_at|date:"Y-m-d H:i" }}</p>
 <p>Total: {{ order.total }}</p>
+
+{% if order.status == "approved" %}
+  <a class="btn btn-primary"
+     href="{% url 'frontend:stripe_checkout' order.id %}">
+    Pay Now (Stripe Test)
+  </a>
+{% elif order.status == "completed" %}
+  <p>This order is already completed.</p>
+{% else %}
+  <p>Order not ready for payment. Current status: {{ order.status }}</p>
+{% endif %}
 
 <h3>Items</h3>
 <table class="table table-bordered">
@@ -28,8 +38,11 @@
   </tbody>
 </table>
 
-<form method="GET" action="{% url 'frontend:generate_invoice_frontend' order.id %}">
-  <button type="submit" class="btn btn-info">Generate PDF Invoice</button>
-</form>
+{% if order.status == "completed" %}
+  <!-- Only show the invoice button if order is completed (i.e. fully paid) -->
+  <form method="GET" action="{% url 'frontend:generate_invoice_frontend' order.id %}">
+    <button type="submit" class="btn btn-info">Generate PDF Invoice</button>
+  </form>
+{% endif %}
 
 {% endblock %}

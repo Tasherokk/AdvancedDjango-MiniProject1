@@ -22,6 +22,14 @@ from django.core.cache import cache
 from sales_and_trading.utils.pdf_utils import render_pdf, pdf_response
 from apps.sales.models import SalesOrder, Invoice
 
+import stripe
+from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.contrib import messages
+
+from apps.sales.models import Payment
 
 def index_view(request):
     return render(request, 'frontend/index.html')
@@ -290,13 +298,118 @@ def generate_invoice_frontend_view(request, order_id):
         # If not, create one
         invoice = Invoice.objects.create(sales_order=sales_order)
 
+    original_sum = 0
+    for item in sales_order.items.all():
+        original_sum += item.product.price * item.quantity
+
+    if original_sum > 0:
+        discount_percentage = (1 - (sales_order.total / original_sum)) * 100
+        discount_percentage = round(discount_percentage, 2)
+    else:
+        discount_percentage = 0
+
     # 4) Render the PDF using your invoice_template.html
     context = {
         'invoice': invoice,
-        'date': timezone.now()  # optional if you want current date in context
+        'date': timezone.now(),
+        'discount_percentage': discount_percentage,
     }
     pdf_content = render_pdf('invoice_template.html', context_dict=context)
 
     # 5) Return as a downloadable PDF
     filename = f"invoice_{invoice.id}.pdf"
     return pdf_response(pdf_content, filename=filename)
+
+
+
+# apps/frontend/views.py
+
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+@login_required
+def start_stripe_checkout_view(request, order_id):
+    """
+    Create a Stripe Checkout Session for the given SalesOrder
+    and redirect user to Stripe's hosted checkout page.
+    """
+    sales_order = get_object_or_404(SalesOrder, id=order_id)
+
+    # Check if user is the order's owner or admin
+    if request.user != sales_order.customer and request.user.role not in ['admin', 'sales']:
+        return HttpResponseForbidden("You do not have permission for this order.")
+
+    if sales_order.status == 'paid':
+        messages.info(request, "Order is already paid.")
+        return redirect('frontend:order_detail', order_id=order_id)
+
+    # Convert decimal to int in cents (Stripe uses integer amounts in smallest currency unit)
+    # For example, if total is 12.99, we want 1299 as an integer
+    amount_cents = int(sales_order.total * 100)
+
+    # Create or get Payment record
+    payment, created = Payment.objects.get_or_create(sales_order=sales_order)
+    payment.amount = sales_order.total
+    payment.save()
+
+    # Create a checkout session
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {
+                    'name': f"SalesOrder #{sales_order.id}",
+                },
+                'unit_amount': amount_cents,
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=request.build_absolute_uri(f"/sales/orders/{order_id}/stripe/success/"),
+        cancel_url=request.build_absolute_uri(f"/sales/orders/{order_id}/stripe/cancel/"),
+    )
+
+    # Store the session ID in Payment so we can verify later if needed
+    payment.stripe_session_id = session.id
+    payment.save()
+
+    # Redirect user to Stripe Checkout page
+    return redirect(session.url)
+
+
+
+@login_required
+def stripe_payment_success_view(request, order_id):
+    sales_order = get_object_or_404(SalesOrder, id=order_id)
+    payment = getattr(sales_order, 'payment', None)
+    if payment is None:
+        messages.error(request, "No payment record found.")
+        return redirect('frontend:order_detail', order_id=order_id)
+
+    # (You could also verify the Stripe session here in a real system.)
+
+    payment.status = 'successful'
+    payment.save()
+
+    # Now mark the order as completed (instead of 'paid')
+    sales_order.status = 'completed'
+    sales_order.save()
+
+    messages.success(request, "Payment successful! The order is now completed.")
+    return redirect('frontend:order_detail', order_id=sales_order.id)
+
+@login_required
+def stripe_payment_cancel_view(request, order_id):
+    """
+    The user cancelled Stripe checkout. We can mark as failed or let them retry.
+    """
+    sales_order = get_object_or_404(SalesOrder, id=order_id)
+    payment = getattr(sales_order, 'payment', None)
+    if payment:
+        payment.status = 'failed'
+        payment.save()
+
+    messages.info(request, "Payment cancelled. You can try again.")
+    return redirect('frontend:order_detail', order_id=order_id)

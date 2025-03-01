@@ -23,4 +23,10 @@ urlpatterns = [
     path('sales/orders/<int:order_id>/invoice/',
          views.generate_invoice_frontend_view,
          name='generate_invoice_frontend'),
+    path('sales/orders/<int:order_id>/stripe/checkout/',
+         views.start_stripe_checkout_view, name='stripe_checkout'),
+    path('sales/orders/<int:order_id>/stripe/success/',
+         views.stripe_payment_success_view, name='stripe_success'),
+    path('sales/orders/<int:order_id>/stripe/cancel/',
+         views.stripe_payment_cancel_view, name='stripe_cancel'),
 ]

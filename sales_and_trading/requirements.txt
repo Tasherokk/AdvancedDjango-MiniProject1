@@ -13,3 +13,4 @@ whitenoise
 django-crispy-forms
 crispy-bootstrap4
 django-redis
+stripe

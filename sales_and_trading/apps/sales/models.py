@@ -44,3 +44,19 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"Invoice #{self.id} for Order #{self.sales_order.id}"
+
+
+class Payment(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('successful', 'Successful'),
+        ('failed', 'Failed'),
+    )
+    sales_order = models.OneToOneField(SalesOrder, on_delete=models.CASCADE, related_name='payment')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    stripe_session_id = models.CharField(max_length=200, blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Payment(Order #{self.sales_order.id}) - {self.status}"
