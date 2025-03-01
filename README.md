@@ -13,3 +13,7 @@ May be needed
 4. docker-compose up -d (to turn on)  
 5. docker-compose up -d --remove-orphans (to remove old containers)
 6. docker-compose exec web pip install crispy-bootstrap4 (to install additional libraries or modules)
+
+
+Video url:
+https://youtu.be/0kl_8JylVlU
